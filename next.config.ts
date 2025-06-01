@@ -7,7 +7,7 @@ const nextConfig = {
     ignoreDuringBuilds: true // Temporarily ignore ESLint errors during build
   },
   experimental: {
-    serverComponentsExternalPackages: ['mongoose']
+    serverExternalPackages: ['mongoose']
   },
   output: 'standalone'
 };

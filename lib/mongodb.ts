@@ -7,7 +7,7 @@ declare global {
   } | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://fertilizer:fertilizer@cluster0.fi3ezm3.mongodb.net/fertilizer?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -31,16 +31,23 @@ async function connectDB() {
       bufferCommands: false,
     };
 
-    cached = global.mongooseGlobal = { conn: null, promise: null };
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    try {
+      cached = global.mongooseGlobal = { conn: null, promise: null };
+      cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
+        console.log('MongoDB connected successfully');
+        return mongoose;
+      });
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+      throw error;
+    }
   }
 
   try {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
+    console.error('Error establishing MongoDB connection:', e);
     throw e;
   }
 

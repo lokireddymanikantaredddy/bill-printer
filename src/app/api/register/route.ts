@@ -41,7 +41,9 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log('Attempting to connect to MongoDB...');
     await connectDB();
+    console.log('MongoDB connection successful');
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -55,6 +57,7 @@ export async function POST(request: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    console.log('Creating new user...');
     // Create user
     const user = await User.create({
       name,
@@ -62,6 +65,7 @@ export async function POST(request: Request) {
       password: hashedPassword,
       role: 'USER', // Default role
     });
+    console.log('User created successfully');
 
     // Remove password from response
     const userResponse = {
@@ -84,6 +88,22 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Handle MongoDB connection errors
+    if (error instanceof Error && error.name === 'MongoError') {
+      console.error('MongoDB Error:', error);
+      return NextResponse.json(
+        { error: 'Database connection error. Please try again later.' },
+        { status: 500 }
+      );
+    }
+
+    // Log the full error for debugging
+    console.error('Detailed error:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
 
     return NextResponse.json(
       { error: 'Failed to create user. Please try again.' },
