@@ -6,13 +6,14 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true // Temporarily ignore ESLint errors during build
   },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb'
-    },
-    serverExternalPackages: ['mongoose']
-  },
-  output: 'standalone'
+  output: 'standalone',
+  webpack: (config: any) => {
+    config.externals.push({
+      'mongodb-client-encryption': 'mongodb-client-encryption',
+      'mongoose': 'mongoose'
+    });
+    return config;
+  }
 };
 
 module.exports = nextConfig;
