@@ -13,7 +13,10 @@ const nextConfig = {
       'mongoose': 'mongoose'
     });
     return config;
-  }
+  },
+  // Add proper handling for static pages
+  trailingSlash: false,
+  skipTrailingSlashRedirect: true
 };
 
 module.exports = nextConfig;
