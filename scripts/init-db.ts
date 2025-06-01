@@ -5,7 +5,7 @@ const path = require('path');
 // Load environment variables from .env.local
 config({ path: path.resolve(process.cwd(), '.env.local') });
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/bill-app';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://fertilizer:fertilizer@cluster0.fi3ezm3.mongodb.net/fertilizer?retryWrites=true&w=majority&appName=Cluster0';
 
 async function initializeDB() {
   try {

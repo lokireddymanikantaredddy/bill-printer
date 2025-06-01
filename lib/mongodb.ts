@@ -7,7 +7,7 @@ declare global {
   } | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/bill-app';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://fertilizer:fertilizer@cluster0.fi3ezm3.mongodb.net/fertilizer?retryWrites=true&w=majority&appName=Cluster0';
 
 if (!MONGODB_URI) {
   throw new Error(
