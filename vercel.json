@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "env": {
+    "MONGODB_URI": "your_mongodb_uri",
+    "NEXTAUTH_URL": "https://bill-application.vercel.app",
+    "NEXTAUTH_SECRET": "your_nextauth_secret"
+  }
+} 
